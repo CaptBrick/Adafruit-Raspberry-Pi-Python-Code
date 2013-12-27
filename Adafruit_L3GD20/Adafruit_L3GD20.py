@@ -5,7 +5,7 @@ from Adafruit_I2C.Adafruit_I2C import Adafruit_I2C
 class L3GD20(Adafruit_I2C):
     L3GD20_ADDRESS = 0x6B # 1101011
     L3GD20_POLL_TIMEOUT = 100         # Maximum number of read attempts
-    L3GD20_ID = 0b11010100
+    L3GD20_ID = 0xD4                  #11010100
 
     L3GD20_SENSITIVITY_250DPS = 0.00875      # Roughly 22/256 for fixed point match
     L3GD20_SENSITIVITY_500DPS = 0.0175       # Roughly 45/256
