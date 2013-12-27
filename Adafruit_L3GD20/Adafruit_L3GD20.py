@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import math
 
 from Adafruit_I2C.Adafruit_I2C import Adafruit_I2C
 
@@ -110,6 +111,19 @@ class L3GD20(Adafruit_I2C):
 
         return x, y, z
 
+    def read_radians(self):
+        (x, y, z) = self.read()
+        x *= L3GD20.L3GD20_DPS_TO_RADS
+        y *= L3GD20.L3GD20_DPS_TO_RADS
+        z *= L3GD20.L3GD20_DPS_TO_RADS
+        return x, y, z
+
+    def read_degrees(self):
+        (x, y, z) = self.read_radians()
+        x = math.degrees(x)
+        y = math.degrees(y)
+        z = math.degrees(z)
+
 
 if __name__ == '__main__':
     gyro = L3GD20(debug=True)
@@ -118,5 +132,5 @@ if __name__ == '__main__':
     from time import sleep
 
     while True:
-        print "x:%s y:%s z:%s " % (gyro.read())
+        print "x:%s y:%s z:%s " % (gyro.read_degrees())
         sleep(1)
