@@ -123,6 +123,7 @@ class L3GD20(Adafruit_I2C):
         x = math.degrees(x)
         y = math.degrees(y)
         z = math.degrees(z)
+        return x, y, z
 
 
 if __name__ == '__main__':
