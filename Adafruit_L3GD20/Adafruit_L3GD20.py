@@ -47,3 +47,15 @@ class L3GD20(Adafruit_I2C):
             return None
         return self
 
+
+
+if __name__ == '__main__':
+
+    from time import sleep
+
+    lsm = L3GD20(debug=True)
+
+    print '[(Accelerometer X, Y, Z), (Magnetometer X, Y, Z, orientation)]'
+    while True:
+        print lsm.read()
+        sleep(1) # Output is fun to watch if this is commented out
