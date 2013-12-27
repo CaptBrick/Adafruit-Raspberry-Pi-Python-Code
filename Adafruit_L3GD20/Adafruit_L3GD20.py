@@ -82,9 +82,8 @@ class L3GD20(Adafruit_I2C):
         if not who_i_am == L3GD20.L3GD20_ID:
             raise Exception("wrong who i am response, expected %s got %s" % (L3GD20.L3GD20_ID, who_i_am))
 
-
     def read(self):
-        data = self.i2c.readList(L3GD20.Registers.L3GD20_REGISTER_OUT_X_L | 0x80)
+        data = self.i2c.readList(L3GD20.Registers.L3GD20_REGISTER_OUT_X_L | 0x80, 6)
         xlo = data[0]
         xhi = data[1]
         ylo = data[2]
@@ -117,6 +116,7 @@ if __name__ == '__main__':
     gyro.begin()
 
     from time import sleep
+
     while True:
-        print "x: y: z: "  % (gyro.read())
+        print "x:%s y:%s z:%s " % (gyro.read())
         sleep(1)
