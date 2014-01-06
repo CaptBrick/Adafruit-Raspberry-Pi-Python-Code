@@ -22,7 +22,7 @@ class LPS331AP:
     TEMP_OUT_H = 0x2C
     AMP_CTRL = 0x30
 
-    ID = 0xBB #10111011
+    ID = 0b10111011
     ADDRESS = 0x5D
     DELTA_PRESS_XL= 0x3C
     DELTA_PRESS_L = 0x3D
@@ -39,16 +39,18 @@ class LPS331AP:
         self.i2c.write8(LPS331AP.CTRL_REG1, 0b11100000)
 
     def read_temperature_raw(self):
-        tl = self.i2c.readU8(LPS331AP.TEMP_OUT_L)
-        th = self.i2c.readU8(LPS331AP.TEMP_OUT_H)
+        data = self.i2c.readList(LPS331AP.TEMP_OUT_L | 0x80, 2)
+        tl = data[0]
+        th = data[1]
         val = th << 8 | tl
         return self.get_twos_complement(val, 16)
 
 
     def read_pressure_raw(self):
-        pxl = self.i2c.readU8(LPS331AP.PRESS_OUT_XL)
-        pl = self.i2c.readU8(LPS331AP.PRESS_OUT_L)
-        ph = self.i2c.readU8(LPS331AP.PRESS_OUT_H)
+        data = self.i2c.readList(LPS331AP.PRESS_OUT_XL | 0x80, 6)
+        pxl = data[0]
+        pl = data[1]
+        ph = data[2]
 
         val = ph << 16 | pl << 8 | pxl
         raw = self.get_twos_complement(val, 24)
